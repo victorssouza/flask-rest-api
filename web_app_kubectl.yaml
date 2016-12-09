@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flask-web-app
+  labels:
+    version: "1.4"
+    app: flask-web-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: flask-web-app
+      labels:
+        version: "1.4"
+        app: flask-web-app
+    spec:
+      containers:
+      - name: flask-web-app
+        image: flask_web_app:1.4
+        command:
+          - python3
+          - controller.py
+        securityContext:
+            privileged: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-web-app
+  labels:
+    version: "1.4"
+    app: flask-web-app
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 32000
+      protocol: TCP
+  selector:
+    app: flask-web-app
+  type: NodePort

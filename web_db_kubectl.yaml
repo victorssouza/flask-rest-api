@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flask-web-db
+  labels:
+    version: "5.6"
+    app: flask-web-db
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: flask-web-db
+      labels:
+        version: "5.6"
+        app: flask-web-db
+    spec:
+      containers:
+      - name: flask-web-db
+        image: mysql:5.6
+        securityContext:
+            privileged: true
+        env:
+          - name: MYSQL_DATABASE
+            value: FlaskWebApp
+          - name: MYSQL_USER
+            value: root
+          - name: MYSQL_ROOT_PASSWORD
+            value: app
+        volumeMounts:
+          - mountPath: "/var/lib/mysql"
+            name: mysql-data
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysqlclaim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-web-db
+  labels:
+    version: "5.6"
+    app: flask-web-db
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: flask-web-db
+  type: ClusterIP

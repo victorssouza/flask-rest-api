@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>REST v1.4</title>
+    </head>
+    <body>
+        <h2>REST API DOC</h2>
+        <h4>        v1.4</h4>
+        <table border="1" cellpadding="5" cellspacing="5">
+            <tr>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/api/v1/mock/recreate-table</td>
+                <td>curl --data "table=users" http://{URL}/api/v1/mock/recreate-table</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/api/v1/mock/populate-table</td>
+                <td>curl --data "table=users" http://{URL}/api/v1/mock/populate-table</td>
+            </tr>
+            <tr>
+                <td>GET / POST</td>
+                <td>/api/v1/users</td>
+                <td>curl --data "name=FromCSASSASSurl&email=curl@gmail.com&password=1234" http://{URL}/api/v1/users/</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/api/v1/users/{search_id}</td>
+                <td>curl http://{URL}/api/v1/users/4</td>
+            </tr>
+            <tr>
+                <td>GET / PUT</td>
+                <td>/api/v1/users/{user_id}</td>
+                <td>
+                    curl --data "name='Alberto Santos'" http://{URL}/api/v1/users/{id}</br>
+                    curl --data "email=NEW_EMAIL@gmail.com" http://{URL}/api/v1/users/{id}</br>
+                    curl --data "name='Alberto Santos'" "email=NEW_EMAIL@gmail.com" http://{URL}/api/v1/users/{id}</br>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
